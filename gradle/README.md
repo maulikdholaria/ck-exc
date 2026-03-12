@@ -87,19 +87,20 @@ This allows discard selection in **O(log n)** time.
 
 # Order placement
 - Ideal storage place available:
-    - update globalMap + ( coolerMap | heaterMap | shelfMap )
+    - insert to globalMap + ( coolerMap | heaterMap | shelfMap )
     - insert to shelfHeap
 - Shelf available as ideal storage is full
-    - update globalMap + shelfMap
+    - insert to globalMap + shelfMap
     - insert to shelfHeap
-- Try to move from shelf to ideal
-    - update all the map accordingly
+- Try to move from shelf to cooler or heater & then add to shelf
+    - if cooler has space, find a cold order currently on shelf & move or do the same for heater + hot
+    - insert to globalMap + shelfMap
     - insert to shelfHeap
 - Discard order
-    - find order from shelfHeap 
-    - remove entry from globalMap + ( coolerMap | heaterMap | shelfMap )
-    - update to insert to globalMap + ( coolerMap | heaterMap | shelfMap )
-    - insert to shelfHeap
+    - find order from shelfHeap for discard
+    - remove entry for order to be discarded from globalMap + ( coolerMap | heaterMap | shelfMap )
+    - insert new order to globalMap + ( coolerMap | heaterMap | shelfMap )
+    - insert new order to shelfHeap
     
 # Order pickup
 - If no order available in globalMap then return
